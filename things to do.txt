@@ -1,0 +1,18 @@
+Define local history table, local predictor table, path history, global predictor table, choice predictor table
+
+Initialize them with 0's
+
+
+Local-history table indexed by the program counter 
+Local prediction table indexed by localhistopry[index]
+Global prediction table indexed by path history
+Choice prediction table indexed by path history
+
+
+
+PC based on the op-code we will check whether it is branch instruction or not if it is branch prediction is done on it.
+
+Trace file will have PC values
+
+then given to Local history table where we initialize it as all zeros
+then it gies to local prediction table same scenario if it comes more and more we are going to train it
