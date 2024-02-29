@@ -40,7 +40,7 @@ bool PREDICTOR::get_prediction(const branch_record_c* br, const op_state_c* os)
         if(choice<2)
         {
         
-            if(l_pred>1){
+            if(l_pred>3){
 	            return true;
 		    }
 		    else{
@@ -79,7 +79,7 @@ void PREDICTOR::update_predictor(const branch_record_c* br, const op_state_c* os
         	  
       
      // if(choice_prediction[global_histbits]<2){
-            if(l_pred>1)
+            if(l_pred>3)
                 local_pred = true;
             else
                 local_pred = false;
