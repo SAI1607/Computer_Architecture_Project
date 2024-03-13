@@ -1,19 +1,31 @@
-int gs_pht[4096];
-int ghist;
-int lhist;
-int gmask;
+/*//GSHARE Predictor///
 
-int pcbits;
-int histbits;
-int indexxx;
-int prediction;
+#include<cstdlib>
+#include "predictor.h"
 
-#define gmask  0xFFF;
+
+// Handy Global for use in output routines
+uint ghistoryBits; // Number of bits used for Global History
+uint lhistoryBits; // Number of bits used for Local History
+uint pcIndexBits;  // Number of bits used for PC index
+uint bpType;       // Branch Prediction Type
+uint verbose;
+
+uint gs_pht[1024];
+uint ghist;
+uint gmask;
+
+uint pcbits;
+uint histbits;
+uint indexxx;
+uint prediction;
+
+#define gmask  0xFFC
 
 
 bool PREDICTOR::get_prediction(const branch_record_c* br, const op_state_c* os)
 {
-	pcbits = br->instruction_addr & gmask;
+	pcbits = (br->instruction_addr & gmask)>>2;
     histbits = ghist & gmask;
     indexxx = histbits ^ pcbits;
   
@@ -26,35 +38,33 @@ bool PREDICTOR::get_prediction(const branch_record_c* br, const op_state_c* os)
         return true;
       else
         return false;
-    }
-	else{
-		return true;
 	}
-
+	else{
+    return true;
+	}
 }
 void PREDICTOR::update_predictor(const branch_record_c* br, const op_state_c* os, bool taken)
 {
  
 	  if(br->is_conditional){
-      pcbits = br->instruction_addr & gmask;
+      pcbits = (br->instruction_addr & gmask)>>2;
       histbits = ghist & gmask;
       indexxx = histbits ^ pcbits;
      
       if(taken)
       {
-        if(gs_pht[indexxx]<3)
+        if(gs_pht[indexxx]!=3)
           gs_pht[indexxx]++;
       }
       else
       {
-        if(gs_pht[indexxx]>0)
+        if(gs_pht[indexxx]!=0)
           gs_pht[indexxx]--;
       }
       ghist = ((ghist<<1) | taken);
   }
-  else
-  {
-	  
+	  else{
     ghist = ((ghist<<1) | taken);
-  }
+	  }
+  return;
 }
