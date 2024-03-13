@@ -3,39 +3,32 @@
 #include<cstdlib>
 #include "predictor.h"
 
-
-// Handy Global for use in output routines
-uint ghistoryBits; // Number of bits used for Global History
-uint lhistoryBits; // Number of bits used for Local History
-uint pcIndexBits;  // Number of bits used for PC index
-uint bpType;       // Branch Prediction Type
-uint verbose;
-
-uint gs_pht[1024];
-uint ghist;
-uint gmask;
+uint global_prediction[4096];
+uint global_history;
 
 uint pcbits;
 uint histbits;
 uint indexxx;
-uint prediction;
 
-#define gmask  0xFFC
+#define global_mask  0xFFF
+#define pc_mask      0x3FFC
 
 
 bool PREDICTOR::get_prediction(const branch_record_c* br, const op_state_c* os)
 {
-	pcbits = (br->instruction_addr & gmask)>>2;
-    histbits = ghist & gmask;
+	pcbits = (br->instruction_addr & pc_mask)>>2;
+    histbits = global_history & global_mask;
     indexxx = histbits ^ pcbits;
   
     if(br->is_conditional)
 	{
-      prediction = gs_prediction[indexxx];
-      if(prediction>1)
+      if(global_prediction[indexxx]>1)
+	  {
         return true;
-      else
+	  }
+      else{
         return false;
+	  }
 	}
 	else{
     return true;
@@ -43,26 +36,24 @@ bool PREDICTOR::get_prediction(const branch_record_c* br, const op_state_c* os)
 }
 void PREDICTOR::update_predictor(const branch_record_c* br, const op_state_c* os, bool taken)
 {
- 
-	  if(br->is_conditional){
-      pcbits = (br->instruction_addr & gmask)>>2;
-      histbits = ghist & gmask;
+      pcbits = (br->instruction_addr & pc_mask)>>2;
+      histbits = global_history & global_mask;
       indexxx = histbits ^ pcbits;
-     
+	if(br->is_conditional){
       if(taken)
       {
-        if(gs_pht[indexxx]!=3)
-          gs_pht[indexxx]++;
+        if(global_prediction[indexxx]!=3)
+          global_prediction[indexxx]++;
       }
       else
       {
-        if(gs_pht[indexxx]!=0)
-          gs_pht[indexxx]--;
+        if(global_prediction[indexxx]!=0)
+          global_prediction[indexxx]--;
       }
-      ghist = ((ghist<<1) | taken);
-  }
-	  else{
-    ghist = ((ghist<<1) | taken);
-	  }
+      global_history = ((global_history<<1) | taken);
+    }
+	else{
+		global_history = ((global_history<<1) | taken);
+	}
   return;
 }
