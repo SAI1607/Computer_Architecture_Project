@@ -1,4 +1,4 @@
-/*//GSHARE Predictor///
+//GSHARE Predictor///
 
 #include<cstdlib>
 #include "predictor.h"
@@ -31,9 +31,7 @@ bool PREDICTOR::get_prediction(const branch_record_c* br, const op_state_c* os)
   
     if(br->is_conditional)
 	{
-      
-      //printf("Index: %u\n", index);
-      prediction = gs_pht[indexxx];
+      prediction = gs_prediction[indexxx];
       if(prediction>1)
         return true;
       else
