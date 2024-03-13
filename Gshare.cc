@@ -1,6 +1,5 @@
 //GSHARE Predictor///
 
-#include<cstdlib>
 #include "predictor.h"
 
 uint global_prediction[4096];
