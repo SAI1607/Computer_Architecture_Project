@@ -1,7 +1,7 @@
 #include "predictor.h"
 
 
-uint32_t local_history[1024];
+uint32_t local_history[4096];
 uint32_t local_prediction[4096];
 uint32_t global_prediction[4096];
 uint32_t choice_prediction[4096];
@@ -10,7 +10,7 @@ uint32_t path_history;
 //initialization
 void initialization(){
 
-for(uint32_t i=0; i<1024; i++)
+for(uint32_t i=0; i<4096; i++)
 {
 	local_history[i]=0;
 }
@@ -35,7 +35,7 @@ return;
 
 #define  global_mask  0xFFF
 #define  local_mask  0xFFF
-#define  pc_mask  0xFFC
+#define  pc_mask  0x3FFC
  
 uint32_t global_histbits;
 uint32_t choice;
@@ -50,16 +50,16 @@ bool prediction;
          
 bool PREDICTOR::get_prediction(const branch_record_c* br, const op_state_c* os)
 {
-		pc_idx = (pc_mask & br->instruction_addr)>>2;
+	pc_idx = (pc_mask & br->instruction_addr)>>2;
         local_hist = local_mask & local_history[pc_idx];		   
-	    global_histbits = global_mask & path_history;
+	global_histbits = global_mask & path_history;
         choice = choice_prediction[global_histbits];
 	   // g_pred=global_prediction[global_histbits];
 		//l_pred=local_prediction[local_hist];
        
-    if(br->is_conditional)
-    {   if(choice_prediction[global_histbits]>1)
-		{    if(global_prediction[global_histbits]>1)
+    if(br->is_conditional) { 
+	    if(choice_prediction[global_histbits]>1){
+		    if(global_prediction[global_histbits]>1)
 		    {
 	            return true;
 		    }
@@ -67,12 +67,12 @@ bool PREDICTOR::get_prediction(const branch_record_c* br, const op_state_c* os)
 				return false;
 		    }
 		}
-		else{
-            if(local_prediction[local_hist]>3){
-	            return true;
+	   else{
+                    if(local_prediction[local_hist]>3){
+	                return true;
 		    }
-		    else{
-		    	return false;
+		    else {
+		    	  return false;
 		    }
 		}
     }
