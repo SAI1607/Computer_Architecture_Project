@@ -1,6 +1,5 @@
 //Hybrid Predictor ////
 
-#include<cstdlib>
 #include"predictor.h"
 
 uint local_history[4096];
