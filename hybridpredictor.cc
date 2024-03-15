@@ -1,5 +1,6 @@
 //Hybrid Predictor ////
 
+#include<cstdlib>
 #include"predictor.h"
 
 uint local_history[4096];
@@ -11,27 +12,24 @@ uint path_history;
 //initialization
 void initialization(){
 
-for(uint i=0; i<4096; i++)
-{
-	local_history[i]=0;
-}
-
-for(uint j=0; j<4096; j++)
-{
-	local_prediction[j]=0;
-}
-
-for(uint k=0; k<4096; k++)
-{
-	global_prediction[k]=0;
-}
-
-for(uint l=0; l<4096; l++)
-{
-	choice_prediction[l]=0;
-}
-path_history=0;
-return;
+	for(uint i=0; i<4096; i++)
+	{
+		local_history[i]=0;
+	}
+	for(uint j=0; j<4096; j++)
+	{
+		local_prediction[j]=0;
+	}
+	for(uint k=0; k<4096; k++)
+	{
+		global_prediction[k]=0;
+	}
+	for(uint l=0; l<4096; l++)
+	{
+		choice_prediction[l]=0;
+	}
+	path_history=0;
+	return;
 }
 
 uint pcbits;
@@ -42,7 +40,6 @@ uint lhist;
 
 bool local_pred;
 bool global_pred;
-
 
 #define global_mask 0xFFF
 #define local_mask 0xFFF
@@ -59,26 +56,21 @@ bool PREDICTOR::get_prediction(const branch_record_c* br, const op_state_c* os){
 	{
 		if(choice_prediction[indexxx]<2)
 		{
-			if(local_prediction[lhist]>3){
+			if(local_prediction[lhist]>3)
 				return true;
-			}
-			else{
+			else
 				return false;
-			}
 		}
 		else
 		{
-			if(global_prediction[indexxx]>1){
+			if(global_prediction[indexxx]>1)
 				return true;
-			}
-			else{
+			else
 				return false;
-			}
 		}
 	}
-	else{
+	else
 		return true;
-	}
 }
 
 void PREDICTOR::update_predictor(const branch_record_c* br, const op_state_c* os, bool taken)
@@ -122,8 +114,7 @@ void PREDICTOR::update_predictor(const branch_record_c* br, const op_state_c* os
 		local_history[pcidx] = local_history[pcidx]<<1 | taken;
 		path_history = path_history<<1 | taken;
 	}
-	else{
+	else
 		local_history[pcidx] = local_history[pcidx]<<1 | taken;
-	}
     return;
 }
