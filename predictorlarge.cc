@@ -1,8 +1,6 @@
 /* Author: Sai Kumar, Reshwanth;                                                                                                                                                                                             
  * Description: This file defines the two required functions for the branch predictor.                                                                                                                             
 */
-
-#include<cstdlib>
 #include "predictor.h"
 
 
