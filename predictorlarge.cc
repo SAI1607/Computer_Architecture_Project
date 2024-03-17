@@ -1,7 +1,7 @@
 #include "predictor.h"
 
-uint local_history[4096];
-uint local_prediction[4096];
+uint local_history[1024];
+uint local_prediction[2048];
 uint global_prediction[4096];
 uint choice_prediction[4096];
 uint path_history;
@@ -13,7 +13,7 @@ void initialization(){
 	{
 		local_history[i]=0;
 	}
-	for(uint j=0; j<1024; j++)
+	for(uint j=0; j<2048; j++)
 	{
 		local_prediction[j]=7;
 	}
@@ -30,8 +30,8 @@ void initialization(){
 }
 
 #define  global_mask  0xFFF
-#define  local_mask  0xFFF
-#define  pc_mask  0x3FFC
+#define  local_mask  0x7FF
+#define  pc_mask  0xFFC
  
 uint global_idx;
 uint choice;
@@ -113,5 +113,6 @@ void PREDICTOR::update_predictor(const branch_record_c* br, const op_state_c* os
     }
 	else
 		path_history = ((path_history<<1) | taken) & global_mask;
+
 	return;				  
 }
