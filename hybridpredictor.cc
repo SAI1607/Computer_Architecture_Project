@@ -78,7 +78,6 @@ void PREDICTOR::update_predictor(const branch_record_c* br, const op_state_c* os
     global_idx = histbits ^ pcbits;
     pcidx = (pcmask & br->instruction_addr)>>2;
     local_idx = local_mask & local_history[pcidx];
-
 	if(br->is_conditional){
 		if(local_prediction[local_idx]>3)
 			local_pred = true;
@@ -115,6 +114,6 @@ void PREDICTOR::update_predictor(const branch_record_c* br, const op_state_c* os
 		path_history = path_history<<1 | taken;
 	}
 	else
-		local_history[pcidx] = local_history[pcidx]<<1 | taken;
+		path_history = path_history<<1 | taken;
     return;
 }
