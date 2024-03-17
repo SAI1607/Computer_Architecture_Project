@@ -112,7 +112,6 @@ void PREDICTOR::update_predictor(const branch_record_c* br, const op_state_c* os
         path_history = ((path_history<<1) | taken) & global_mask;
     }
 	else
-		local_history[pc_idx] = ((local_history[pc_idx]<<1) | taken) & local_mask;
-
+		path_history = ((path_history<<1) | taken) & global_mask;
 	return;				  
 }
