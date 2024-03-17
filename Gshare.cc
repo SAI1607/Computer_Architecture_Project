@@ -1,20 +1,19 @@
-//GSHARE Predictor///
 #include "predictor.h"
 
-uint global_prediction[4096];
+uint global_prediction[16384];
 uint global_history;
 
 uint pcbits;
 uint histbits;
 uint indexxx;
 
-#define global_mask  0xFFF
-#define pc_mask      0x3FFC
+#define global_mask  0x3FFF
+#define pc_mask      0xFFFC
 
 //initialization
 void initialization(){
 
-	for(uint i=0; i<4096; i++)
+	for(uint i=0; i<16384; i++)
 	{
 		global_prediction[i]=0;
 	}
