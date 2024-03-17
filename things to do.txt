@@ -16,3 +16,6 @@ Trace file will have PC values
 
 then given to Local history table where we initialize it as all zeros
 then it gies to local prediction table same scenario if it comes more and more we are going to train it
+
+History length. Long history lengths can yield more accurate predictions [7] but also reduce the number of table entries, thereby increasing aliasing. In our experiments, the best
+history lengths ranged from 12 to 62, depending on the hardware budget.
