@@ -57,10 +57,10 @@ void PREDICTOR::update_predictor(const branch_record_c* br, const op_state_c* os
 			if(global_prediction[indexxx]!=0)
 				global_prediction[indexxx]--;
 		}
-		global_history = ((global_history<<1) | taken);
+		global_history = ((global_history<<1) | taken) & global_mask;
     }
 	else
-		global_history = ((global_history<<1) | taken);
+		global_history = ((global_history<<1) | taken) & global_mask;
 	
 	return;
 }
