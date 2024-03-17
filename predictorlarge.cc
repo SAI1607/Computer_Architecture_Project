@@ -9,21 +9,18 @@ uint path_history;
 //initialization
 void initialization(){
 
-	for(uint i=0; i<4096; i++)
+	for(uint i=0; i<1024;i++)
 	{
 		local_history[i]=0;
 	}
-
-	for(uint j=0; j<4096; j++)
+	for(uint j=0; j<1024; j++)
 	{
 		local_prediction[j]=7;
 	}
-
 	for(uint k=0; k<4096; k++)
 	{
 		global_prediction[k]=3;
 	}
-
 	for(uint l=0; l<4096; l++)
 	{
 		choice_prediction[l]=3;
@@ -43,7 +40,6 @@ uint local_idx;
 
 bool local_pred;
 bool global_pred;
-
          
 bool PREDICTOR::get_prediction(const branch_record_c* br, const op_state_c* os)
 {
@@ -116,7 +112,6 @@ void PREDICTOR::update_predictor(const branch_record_c* br, const op_state_c* os
         path_history = ((path_history<<1) | taken) & global_mask;
     }
 	else
-		local_history[pc_idx] = ((local_history[pc_idx]<<1) | taken) & local_mask;
-
+		path_history = ((path_history<<1) | taken) & global_mask;
 	return;				  
 }
