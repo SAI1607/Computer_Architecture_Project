@@ -19,3 +19,11 @@ then it gies to local prediction table same scenario if it comes more and more w
 
 History length. Long history lengths can yield more accurate predictions [7] but also reduce the number of table entries, thereby increasing aliasing. In our experiments, the best
 history lengths ranged from 12 to 62, depending on the hardware budget.
+
+the best threshold  for a given history length h is
+always exactly  = b1:93h + 14
+Since the number of bits needed to represent a
+perceptron weight is one (for the sign bit) plus blog2 
+, the
+number of bits per weight range from 7 (for a history length
+of 12) to 9 (for a history length of 62).
