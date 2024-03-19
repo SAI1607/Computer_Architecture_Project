@@ -27,3 +27,10 @@ perceptron weight is one (for the sign bit) plus blog2 
 , the
 number of bits per weight range from 7 (for a history length
 of 12) to 9 (for a history length of 62).
+
+We can also employ perceptrons
+ in a hybrid predictor that uses both global and local histo
+ries, since hybrid predictors have proven to work better than
+ purely global schemes [6]. We have preliminary experimen
+tal evidence that such hybrid schemes can be improved by
+ using perceptrons,
