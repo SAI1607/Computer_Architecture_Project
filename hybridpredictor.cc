@@ -2,7 +2,7 @@
 #include"predictor.h"
 
 uint local_history[1024];
-uint local_prediction[2048];
+uint local_prediction[1024];
 uint global_prediction[4096];
 uint choice_prediction[4096];
 uint path_history;
@@ -14,7 +14,7 @@ void initialization(){
 	{
 		local_history[i]=0;
 	}
-	for(uint j=0; j<2048; j++)
+	for(uint j=0; j<1024; j++)
 	{
 		local_prediction[j]=0;
 	}
@@ -40,7 +40,7 @@ bool local_pred;
 bool global_pred;
 
 #define global_mask 0xFFF
-#define local_mask 0x7FF
+#define local_mask 0x3FF
 #define pcmask 0xFFC
 
 
