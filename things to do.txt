@@ -34,3 +34,8 @@ ries, since hybrid predictors have proven to work better than
  purely global schemes [6]. We have preliminary experimen
 tal evidence that such hybrid schemes can be improved by
  using perceptrons,
+
+tried implementing using default bias as 1. but could not perfrom better than when we consider updating for history
+In the perceptron-based branch predictor, each weight
+is a function of the correlation between a past branch and
+the branch being predicted. 
