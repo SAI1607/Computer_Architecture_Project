@@ -1,0 +1,41 @@
+Define local history table, local predictor table, path history, global predictor table, choice predictor table
+
+Initialize them with 0's
+
+
+Local-history table indexed by the program counter 
+Local prediction table indexed by localhistopry[index]
+Global prediction table indexed by path history
+Choice prediction table indexed by path history
+
+
+
+PC based on the op-code we will check whether it is branch instruction or not if it is branch prediction is done on it.
+
+Trace file will have PC values
+
+then given to Local history table where we initialize it as all zeros
+then it gies to local prediction table same scenario if it comes more and more we are going to train it
+
+History length. Long history lengths can yield more accurate predictions [7] but also reduce the number of table entries, thereby increasing aliasing. In our experiments, the best
+history lengths ranged from 12 to 62, depending on the hardware budget.
+
+the best threshold  for a given history length h is
+always exactly  = b1:93h + 14
+Since the number of bits needed to represent a
+perceptron weight is one (for the sign bit) plus blog2 
+, the
+number of bits per weight range from 7 (for a history length
+of 12) to 9 (for a history length of 62).
+
+We can also employ perceptrons
+ in a hybrid predictor that uses both global and local histo
+ries, since hybrid predictors have proven to work better than
+ purely global schemes [6]. We have preliminary experimen
+tal evidence that such hybrid schemes can be improved by
+ using perceptrons,
+
+tried implementing using default bias as 1. but could not perfrom better than when we consider updating for history
+In the perceptron-based branch predictor, each weight
+is a function of the correlation between a past branch and
+the branch being predicted. 
